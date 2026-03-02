@@ -1,7 +1,29 @@
 const generateBtn = document.getElementById('generate-btn');
 const numberElements = document.querySelectorAll('.lotto-numbers .number');
+const themeToggle = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+// Theme toggle logic
+themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeButton(newTheme);
+});
+
+function updateThemeButton(theme) {
+    themeToggle.textContent = theme === 'dark' ? '라이트 모드' : '다크 모드';
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme') || 'light';
+htmlElement.setAttribute('data-theme', savedTheme);
+updateThemeButton(savedTheme);
 
 generateBtn.addEventListener('click', () => {
+...
     // Clear previous numbers and add a generating effect
     let clearingInterval = setInterval(() => {
         numberElements.forEach((el, index) => {
